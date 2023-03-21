@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateNinjaDto } from './dto/create-ninja.dto';
-import { UpdateNinjarDto } from './dto/update-ninja.dto';
+import { UpdateNinjaDto } from './dto/update-ninja.dto';
 import { NinjasService } from './ninjas.service';
 
 @Controller('ninjas')
@@ -23,7 +23,7 @@ export class NinjasController {
 
   @Get(':id')
   getOneNinja(@Param('id') id: string) {
-    return this.ninjaService.getNinja(Number(id));
+    return this.ninjaService.getNinja(+id);
   }
 
   @Post()
@@ -32,15 +32,12 @@ export class NinjasController {
   }
 
   @Put(':id')
-  updateNinja(
-    @Param('id') id: string,
-    @Body() updateNinjaDto: UpdateNinjarDto,
-  ) {
-    return { id, name: updateNinjaDto.name };
+  updateNinja(@Param('id') id: string, @Body() updateNinjaDto: UpdateNinjaDto) {
+    return this.ninjaService.updateNinja(+id, updateNinjaDto);
   }
 
   @Delete(':id')
   removeNinja(@Param('id') id: string) {
-    return { id };
+    return this.ninjaService.removeNinja(+id);
   }
 }
